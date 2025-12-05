@@ -54,9 +54,15 @@ def main():
     tokenizer = ByteLevelTokenizer()
 
     vocab_size = len(tokenizer.vocab)
-    model = SparrowGPT(vocab_size=vocab_size).to(DEVICE)
+    model = SparrowGPT(
+        vocab_size=vocab_size,
+        embed_dim=128,
+        num_heads=4,
+        num_layers=4,
+        hidden_dim=512,
+        max_seq_len=128
+    ).to(DEVICE)
 
-    # Load checkpoint
     model.load_state_dict(torch.load(CHECKPOINT_PATH, map_location=DEVICE))
 
     output = generate(
